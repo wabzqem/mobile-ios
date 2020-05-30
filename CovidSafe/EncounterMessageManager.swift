@@ -2,8 +2,8 @@ import Foundation
 
 class EncounterMessageManager {
     let userDefaultsTempIdKey = "BROADCAST_MSG"
-    let userDefaultsAdvtKey = "ADVT_DATA"
     let userDefaultsAdvtExpiryKey = "ADVT_EXPIRY"
+    let tempIdObserverQueue = DispatchQueue(label: "au.gov.covidsafe.tempidObserver", attributes: .concurrent)
     
     static let shared = EncounterMessageManager()
     
@@ -105,6 +105,32 @@ class EncounterMessageManager {
     
     private func fetchTempIdFromApi(onComplete: ((Error?, (String, Date)?) -> Void)?) {
         DLog("Fetching tempId from API")
+        
+        struct ObserverHolder {
+            static var observers: [((Error?, (String, Date)?) -> Void)?] = Array()
+            static var needsApiCall: Bool = true
+        }
+        
+        // This needs to be thread safe.
+        let group = DispatchGroup()
+        group.enter()
+        tempIdObserverQueue.async(flags: .barrier) { [weak self] in
+            guard let _ = self else { return }
+            if ObserverHolder.observers.count > 0 {
+                ObserverHolder.observers.append(onComplete)
+                ObserverHolder.needsApiCall = false
+                group.leave()
+                return
+            }
+            ObserverHolder.observers.append(onComplete)
+            ObserverHolder.needsApiCall = true
+            group.leave()
+        }
+        group.wait()
+        if (!ObserverHolder.needsApiCall) {
+            return
+        }
+        
         GetTempIdAPI.getTempId { (tempId: String?, expiry: Int?, error: Error?) in
             guard error == nil else {
                 if let error = error as NSError? {
@@ -117,9 +143,9 @@ class EncounterMessageManager {
                 }
                 // if we have an existing tempid and expiry, use that
                 if let msg = self.tempId, let exp = self.advertisementPayloadExpiry {
-                    onComplete?(nil, (msg, exp))
+                    response(error: nil, result: (msg, exp))
                 } else {
-                    onComplete?(error, nil)
+                    response(error: nil, result: nil)
                 }
                 return
             }
@@ -127,12 +153,22 @@ class EncounterMessageManager {
             guard let tempId = tempId,
                 let expiry = expiry else {
                     DLog("Unable to get tempId or expiry from API.")
-                    onComplete?(NSError(domain: "BM", code: 9999, userInfo: nil), nil)
+                    response(error: NSError(domain: "BM", code: 9999, userInfo: nil), result: nil)
                     return
             }
 
             let date = Date(timeIntervalSince1970: TimeInterval(expiry))
-            onComplete?(nil, (tempId, date))
+            response(error: nil, result: (tempId, date))
+        }
+        
+        func response(error: Error?, result: (String, Date)?) {
+            tempIdObserverQueue.async(flags: .barrier) { [weak self] in
+                guard let _ = self else { return }
+                ObserverHolder.observers.forEach { (observer) in
+                    observer?(error, result)
+                }
+                ObserverHolder.observers.removeAll()
+            }
         }
     }
 }
