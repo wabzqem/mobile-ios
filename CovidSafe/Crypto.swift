@@ -20,6 +20,7 @@ enum SecurityError: Error {
 
 
 class Crypto {
+    private static var SETTINGS_CACHE_KEY = "settings_no_key_cache"
     private static var cachedExportPublicKey: Data?
     private static var cachedAesKey: Data?
     private static var cachedMacKey: Data?
@@ -114,7 +115,7 @@ class Crypto {
     static func buildSecretData(_ serverPublicKey: Data, _ plaintext: Data) throws -> Data {
         // Get our ephemeral secrets that will de disposed at the end of this function
         let (cachedExportPublicKey, cachedAESKey, cachedMacKey, nonce) = try keyCacheQueue.sync { () -> (Data?, Data?, Data?, Data) in
-            if Crypto.keyGenTime <= Int64(Date().timeIntervalSince1970) - KEY_GEN_TIME_DELTA || Crypto.counter >= 65535 {
+            if Crypto.keyGenTime <= Int64(Date().timeIntervalSince1970) - KEY_GEN_TIME_DELTA || Crypto.counter >= 65535 || UserDefaults.standard.bool(forKey: SETTINGS_CACHE_KEY) == true {
                 (Crypto.cachedExportPublicKey, Crypto.cachedAesKey, Crypto.cachedMacKey) = try getEphemeralSecrets(serverPublicKey)
                 Crypto.keyGenTime = Int64(Date().timeIntervalSince1970)
                 Crypto.counter = 0

@@ -253,6 +253,7 @@
 		C585C83B23EEB99B0061B7C6 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585C83A23EEB99B0061B7C6 /* GradientButton.swift */; };
 		C58D817723F169DB00345771 /* OnboardingStep2bViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58D817623F169DB00345771 /* OnboardingStep2bViewController.swift */; };
 		C5D209FC23F4476F007233BE /* UITextViewFixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D209FB23F4476F007233BE /* UITextViewFixed.swift */; };
+		D347A06024822EAE005FA811 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D347A05F24822EAE005FA811 /* Settings.bundle */; };
 		D8DEB6822423AE2E00D99925 /* OnboardingStep1bViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DEB6812423AE2E00D99925 /* OnboardingStep1bViewController.swift */; };
 		D8EB201B23FA722D001C60EC /* HelpNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EB201A23FA722D001C60EC /* HelpNavController.swift */; };
 		D8EB201D23FBE216001C60EC /* help_center_article_style.css in Resources */ = {isa = PBXBuildFile; fileRef = D8EB201C23FBE216001C60EC /* help_center_article_style.css */; };
@@ -408,6 +409,7 @@
 		C585C83A23EEB99B0061B7C6 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 		C58D817623F169DB00345771 /* OnboardingStep2bViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStep2bViewController.swift; sourceTree = "<group>"; };
 		C5D209FB23F4476F007233BE /* UITextViewFixed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewFixed.swift; sourceTree = "<group>"; };
+		D347A05F24822EAE005FA811 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		D8DEB6812423AE2E00D99925 /* OnboardingStep1bViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStep1bViewController.swift; sourceTree = "<group>"; };
 		D8EB201A23FA722D001C60EC /* HelpNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpNavController.swift; sourceTree = "<group>"; };
 		D8EB201C23FBE216001C60EC /* help_center_article_style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = help_center_article_style.css; sourceTree = "<group>"; };
@@ -692,6 +694,7 @@
 				30BE1CAC23F119FD005DCE4F /* Localizable.strings */,
 				5D269C0A23E22CC400ADF2DE /* DeviceIdentifier.swift */,
 				DC24373E23F51531007BDBDF /* covid-Bridging-Header.h */,
+				D347A05F24822EAE005FA811 /* Settings.bundle */,
 			);
 			path = CovidSafe;
 			sourceTree = "<group>";
@@ -950,6 +953,7 @@
 				5B92D6CC243018040049877B /* Feedback.strings in Resources */,
 				5B337AB0245AA26300537620 /* Spinner_upload.json in Resources */,
 				59AF2EAB2435801400ACCAF2 /* AmazonRootCA3.cer in Resources */,
+				D347A06124822EAE005FA811 /* Settings.bundle in Resources */,
 				5B92D6CF243018040049877B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -971,6 +975,7 @@
 				A767D30F242DF1B000DC9E2A /* NewFeedbackFlow.strings in Resources */,
 				59AF2EAC2435801400ACCAF2 /* AmazonRootCA4.cer in Resources */,
 				5DD41D4723DCB03D00FD4AB0 /* LaunchScreen.storyboard in Resources */,
+				D347A06024822EAE005FA811 /* Settings.bundle in Resources */,
 				59AF2EAE2435801400ACCAF2 /* AmazonRootCA2.cer in Resources */,
 				5DD41D4423DCB03D00FD4AB0 /* Assets.xcassets in Resources */,
 				A767D30E242DF1B000DC9E2A /* Feedback.strings in Resources */,
